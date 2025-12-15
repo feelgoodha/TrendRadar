@@ -1,0 +1,71 @@
+# ========================================
+# TrendRadar Docker Compose 简易配置
+# 说明：无推送渠道的最小化部署
+# ========================================
+services:
+  trend-radar:
+    image: wantcat/trendradar:latest
+    container_name: trend-radar
+    restart: unless-stopped
+
+    ports:
+      # 仅在本地监听（安全）
+      - "127.0.0.1:8080:8080"
+
+    volumes:
+      # 挂载配置文件（只读）
+      - ./config:/app/config:ro
+      # 挂载数据输出目录（可读写）
+      - ./output:/app/output
+
+    environment:
+      - TZ=Asia/Shanghai
+
+      # ========================================
+      # 核心配置
+      # ========================================
+      - ENABLE_CRAWLER=true              # 启用爬虫
+      - CRAWLER_REQUEST_INTERVAL=1000    # 请求间隔
+
+      # ========================================
+      # 关键：禁用推送功能
+      # ========================================
+      - ENABLE_NOTIFICATION=false        # ⭐ 不发送推送
+
+      # ========================================
+      # 报告配置
+      # ========================================
+      - REPORT_MODE=daily                # 日报模式
+      - RANK_THRESHOLD=5                 # 排名阈值
+      - SORT_BY_POSITION_FIRST=false     # 热点数排序
+      - MAX_NEWS_PER_KEYWORD=0           # 不限制新闻数
+      - REVERSE_CONTENT_ORDER=false      # 统计在前
+
+      # ========================================
+      # 定时执行配置
+      # ========================================
+      - RUN_MODE=cron                    # 定时执行
+      - CRON_SCHEDULE=*/30 * * * *       # 每30分钟执行一次
+      - IMMEDIATE_RUN=true               # 启动时立即执行
+
+      # ========================================
+      # Web 服务器（可选）
+      # ========================================
+      - ENABLE_WEBSERVER=false           # 不启用 Web UI
+      - WEBSERVER_PORT=8080
+
+  # ========================================
+  # 可选：MCP 服务器（AI 工具接口）
+  # 取消注释可启用
+  # ========================================
+  # trend-radar-mcp:
+  #   image: wantcat/trendradar-mcp:latest
+  #   container_name: trend-radar-mcp
+  #   restart: unless-stopped
+  #   ports:
+  #     - "127.0.0.1:3333:3333"
+  #   volumes:
+  #     - ./config:/app/config:ro
+  #     - ./output:/app/output:ro
+  #   environment:
+  #     - TZ=Asia/Shanghai
