@@ -92,7 +92,7 @@ notification:
   webhooks:
     feishu_url: "" # 飞书机器人的 webhook URL（多账号用 ; 分隔）
     dingtalk_url: "" # 钉钉机器人的 webhook URL（多账号用 ; 分隔）
-    wework_url: "" # 企业微信机器人的 webhook URL（多账号用 ; 分隔）
+    wework_url: "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=0bfca5c8-5ebf-48dd-9c29-4b8c853e39e7" # 企业微信机器人的 webhook URL（多账号用 ; 分隔）
     wework_msg_type: "markdown" # 企业微信消息类型：markdown(群机器人) 或 text(个人微信应用)
     telegram_bot_token: "" # Telegram Bot Token（多账号用 ; 分隔，需与 chat_id 数量一致）
     telegram_chat_id: "" # Telegram Chat ID（多账号用 ; 分隔，需与 bot_token 数量一致）

@@ -1,8 +1,2 @@
-AI
-+马斯克
-
-高市早苗
-外交部
-openai
-chatgpt
-deepseek
+gemini
+日本

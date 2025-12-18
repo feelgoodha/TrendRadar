@@ -1,0 +1,8 @@
+# Ignore sensitive configuration files
+# Do NOT commit config/config.yaml — contains secrets and webhooks
+config/config.yaml
+
+# Optional: ignore runtime output and local env files
+output/
+.env
+.env.*
